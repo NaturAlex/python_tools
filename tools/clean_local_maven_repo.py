@@ -64,7 +64,7 @@ except Exception as e:
 
 depend = args.depend
 version = args.version
-debug  = args.debug
+debug = args.debug
 keyword_array = args.keywords
 if __name__ == "__main__":
     try:
