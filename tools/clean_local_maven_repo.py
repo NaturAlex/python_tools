@@ -32,7 +32,11 @@ def deletefiles(wait_delete_file_set):
         if not DEBUG:
             os.remove(f)
             
+<<<<<<< HEAD
 def main(depend, version, debug, keyword_array):
+=======
+def main(depend,version,debug,keyword_array):
+>>>>>>> 46667e34805eb85a3be23449fc7438c14c1b43f8
     # keyword='autotest'
     # version='all'
     # keywords=['token-validation']
@@ -42,8 +46,13 @@ def main(depend, version, debug, keyword_array):
         keywords.append(version)
     else:
         keywords = keyword_array
+<<<<<<< HEAD
     DEBUG = debug
     findFile(REPO_PATH, keywords)
+=======
+    DEBUG=debug
+    findFile(REPO_PATH,keywords)
+>>>>>>> 46667e34805eb85a3be23449fc7438c14c1b43f8
     deletefiles(wait_delete_file)
 
 """
@@ -62,6 +71,7 @@ try:
 except Exception as e:
     print(e)
 
+<<<<<<< HEAD
 depend = args.depend
 version = args.version
 debug  = args.debug
@@ -69,6 +79,15 @@ keyword_array = args.keywords
 if __name__ == "__main__":
     try:
         main(depend, version, debug, keyword_array)
+=======
+depend=args.depend
+version=args.version
+debug=args.debug
+keyword_array=args.keywords
+if __name__ == "__main__":
+    try:
+        main(depend,version,debug,keyword_array)
+>>>>>>> 46667e34805eb85a3be23449fc7438c14c1b43f8
     except Exception as e:
         print(e)
     
