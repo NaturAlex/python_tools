@@ -44,11 +44,14 @@ def main(depend, version, debug, keyword_array):
         keywords = keyword_array
     DEBUG = debug
     findFile(REPO_PATH, keywords)
-''' 
+    deletefiles(wait_delete_file)
+
+"""
+python tools\clean_local_maven_repo.py --dependency Hero --version r21.8 --debug true
 python tools\clean_local_maven_repo.py --help
 python tools\clean_local_maven_repo.py --keyword Hero --keyword r21.8 --debug true
-'''
 
+"""
 parser = argparse.ArgumentParser(usage="delete local repo dependencies", description='delete local repo dependencies')
 parser.add_argument('--dependency',dest='depend', metavar='Hero', type=str, help='dependency name')
 parser.add_argument('--version',dest='version', metavar='21.4', type=str, help='dependency name')
@@ -62,3 +65,13 @@ except Exception as e:
 depend = args.depend
 version = args.version
 debug  = args.debug
+keyword_array = args.keywords
+if __name__ == "__main__":
+    try:
+        main(depend, version, debug, keyword_array)
+    except Exception as e:
+        print(e)
+    
+
+
+
