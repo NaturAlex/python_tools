@@ -14,3 +14,4 @@ conda:
 
 flake8
     可以校验python语法不规范
+git test github conflict
