@@ -5,12 +5,12 @@ python ./remove_local_dependency.py
 '''
 delete = False
 DEBUG = True
-# REPO_PATH="C:\\repository\\com\\ericsson\\"
-REPO_PATH="C:\\repository\\com\\ericsson\\nsi\\iam\\v2\\Hero"
+REPO_PATH="C:\\repository\\com\\ericsson\\"
+# REPO_PATH = "C:\\repository\\com\\ericsson\\nsi\\iam\\v2\\Hero"
 wait_delete_file = set()
 
 
-def findFile(path,keywords):
+def findFile(path, keywords):
     file_list = os.listdir(path)  
     for file_name in file_list:
         file_abs_path = os.path.join(path, file_name)
@@ -42,9 +42,12 @@ def main(depend,version,debug,keyword_array):
         keywords.append(version)
     else:
         keywords = keyword_array
-    DEBUG = debug
-    findFile(REPO_PATH, keywords)
-''' 
+    DEBUG=debug
+    findFile(REPO_PATH,keywords)
+    deletefiles(wait_delete_file)
+
+"""
+python tools\clean_local_maven_repo.py --dependency Hero --version r21.8 --debug true
 python tools\clean_local_maven_repo.py --help
 python tools\clean_local_maven_repo.py --keyword Hero --keyword r21.8 --debug true
 
@@ -59,7 +62,16 @@ try:
 except Exception as e:
     print(e)
 
-<<<<<<< HEAD
-depend = args.depend
-version = args.version
-debug  = args.debug
+depend=args.depend
+version=args.version
+debug=args.debug
+keyword_array=args.keywords
+if __name__ == "__main__":
+    try:
+        main(depend,version,debug,keyword_array)
+    except Exception as e:
+        print(e)
+    
+
+
+
