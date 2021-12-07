@@ -6,7 +6,6 @@
 调用系统命令:
     os.system()
     os.system('start c:')   #打开C盘
-<<<<<<< HEAD
 
 conda:
     conda create -n my_py_env python=3.7
@@ -15,6 +14,4 @@ conda:
 
 flake8
     可以校验python语法不规范
-=======
->>>>>>> 46667e3 (init)
-"""
+git test github conflict
