@@ -1,10 +1,10 @@
-
-
 """ 
 python basic/array_test.py
 """
+
+
 def main():
-    arr = ['1','2'] 
+    arr = ['1', '2'] 
     word = '123456'
     all_exists = any(str in word for str in arr)
     print('all_exists:{}'.format(all_exists))

@@ -23,12 +23,12 @@ parser.add_argument('--key',type=str, dest='mykey',  default="k",
 parser.add_argument('--num',type=int, dest='num_array', help='int num array', action='append', required=True)
 # choic param
 parser.add_argument('--drink', type=str, dest='drink', help='tea or coffee', choices=['tea','coffee'])
-# bool param
-parser.add_argument('--debug',  dest='debug', help='is debug', action='store_true', default=True)
-parser.add_argument('--notdebug',  dest='debug', help='not deubg',action='store_false', default=False)
+# bool param, 默认为false, 当--debug的时候为true
+parser.add_argument('--debug', dest='debug', action="store_true", help='if true, only print not delete files', required=False)
 
 args = parser.parse_args()
-print('args:{}'.format(args)) #Namespace(first_param=123, mykey='my_int_key')
+#Namespace(first_param=123, mykey='my_int_key')
+print('args:{}'.format(args)) 
 print('args.mykey:{}'.format(args.mykey))
 print('args.num_array:{}'.format(args.num_array))
 if args.debug:
