@@ -1,0 +1,40 @@
+iam_chub_basic_header: "a3dEVlpvckpVcmExMnUyT20xOHdvT29pUWpMVVhscFI6V0VWV1IyQmRHSFY5b0dTaw=="
+
+iam_env_asserver_basic_authentication: "{{cac_encryption}},{{cac_encryption1}},{{ece_client_encryption}},{{dp_oauth_traffic_key}},{{dp_authentication_traffic_key}},{{abac_key}}"
+iam_env_tocac_basic_authentication: "{{ece_client_encryption}}"
+iam_env_toece_trustedbasic_authentication: "{{ece_encryption_trust}}"
+iam_env_toece_basic_authentication: "{{ece_client_encryption}}"
+
+datasource_postgresql_jdbcUrl: "jdbc:edb://10.169.99.247:5444/edb"
+datasource_postgresql_username: ca
+datasource_postgresql_password: ca
+datasource_postgresql_maximumPoolSize: 20
+datasource_postgresql_minimumIdle: 20
+
+iam_accountlookup_endpoint: "http://proesp-iam-retail.internal.t-mobile.com:8911/Enterprise/Account/AccountLookup"
+iam_customerLookup_endpoint: "https://tugs-eng.internal.t-mobile.com/service/soap/vhandset/CustomerManagement/CustomerLookupService"
+iam_handsetsubscriber_endpoint: "https://tugs-eng.internal.t-mobile.com/service/soap/vhandset/CustomerManagement/HandsetSubscriberService"
+iam_aa_passwordHistoryCheck: "false"
+
+spring.data.cassandra.keyspace-name=iam_keyspace
+spring.data.cassandra.contact-points=127.0.0.1
+spring.data.cassandra.port=9042
+spring.data.cassandra.username=cassandra
+spring.data.cassandra.password=cassandra
+
+iam.env.notification.kafka.bootstrap.servers=localhost:9092
+
+#20.8: Added cache refresh time to fix production issue - TCIIPP-24762
+iam_client_service_configuration_read_cache_refresh_time_insec: 4200
+
+iam_biz_request_logging_enabled: false
+
+#20.8 Moved the below config from env specific to global - TCIIPP-22658
+iam_biz_password_validate_dynamic_blacklist_enabled: "false"
+
+#20.7 Updated authorize config for aging - TCIIPP-23267
+iam_line_linked_min_age_hour: 24
+iam_profile_min_age_hour: 25
+
+#21.3: Updated line account not allowed value as requested by MS - TCIIPP-26718
+iam_contract_lineaccount_notallowed: MBB,B
