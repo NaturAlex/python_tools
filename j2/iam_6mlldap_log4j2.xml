@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="info" monitorInterval="30" schema="Log4J-V2.0.xsd">
+    <Properties>
+        <Property name="CONTEXT">6mlldap</Property>
+    </Properties>
+    <Appenders>
+        <Console name="CLOUDNATIVE-STDOUT" target="SYSTEM_OUT">
+                   <IAMJsonLayout/>
+        </Console>
+        <RollingRandomAccessFile name="ROLLING_FILE" fileName="${sys:IAM_LOG_CONFIG}/${CONTEXT}/${CONTEXT}-event.log"
+                                 immediateFlush="true"
+                                 filePattern="${sys:IAM_LOG_CONFIG}/${CONTEXT}/${CONTEXT}-event.log.%i" append="true">
+            <PatternLayout>
+                <Pattern>%-d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] [ %20c ] [%L],%X{transactionId},%X{componentName},%X{service},${hostName},%m %n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="INBOUND_FILE" fileName="${sys:IAM_LOG_CONFIG}/${CONTEXT}/${CONTEXT}-transaction-logs_${hostName}.log.${date:yyyy-MM-dd-HH}"
+                                 immediateFlush="true"
+                                 filePattern="${sys:IAM_LOG_CONFIG}/${CONTEXT}/${CONTEXT}-transaction-logs_${hostName}.log.%d{yyyy-MM-dd-HH}" append="true">
+            <PatternLayout pattern="%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <IAMFilenameRolloverStrategy>
+                <Delete basePath="${sys:IAM_LOG_CONFIG}/${CONTEXT}/" maxDepth="1">
+                    <IfFileName glob="${CONTEXT}-transaction-logs_${hostName}.log.*">
+                        <IfAccumulatedFileCount exceeds="336"/>
+                    </IfFileName>
+                </Delete>
+            </IAMFilenameRolloverStrategy>
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="OUTBOUND_FILE" fileName="${sys:IAM_LOG_CONFIG}/${CONTEXT}/${CONTEXT}-outbound-transaction-logs_${hostName}.log.${date:yyyy-MM-dd-HH}"
+                                 immediateFlush="true"
+                                 filePattern="${sys:IAM_LOG_CONFIG}/${CONTEXT}/${CONTEXT}-outbound-transaction-logs_${hostName}.log.%d{yyyy-MM-dd-HH}" append="true">
+            <PatternLayout pattern="%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <IAMFilenameRolloverStrategy>
+                <Delete basePath="${sys:IAM_LOG_CONFIG}/${CONTEXT}/" maxDepth="1">
+                    <IfFileName glob="${CONTEXT}-outbound-transaction-logs_${hostName}.log.*">
+                        <IfAccumulatedFileCount exceeds="336"/>
+                    </IfFileName>
+                </Delete>
+            </IAMFilenameRolloverStrategy>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+
+        <asyncRoot level="info" includeLocation="true">
+             <AppenderRef ref="CLOUDNATIVE-STDOUT"/>
+        </asyncRoot>
+
+        <asyncLogger name="com.zaxxer" additivity="true" level="error" includeLocation="true">
+        </asyncLogger>
+
+        <asyncLogger name="net.sf.ehcache" additivity="true" level="error" includeLocation="true">
+        </asyncLogger>
+
+        <asyncLogger name="TransactionLog" additivity="true" level="info">
+            <AppenderRef ref="INBOUND_FILE"/>
+        </asyncLogger>
+
+        <asyncLogger name="OutboundTransactionLog" additivity="true" level="info">
+            <AppenderRef ref="OUTBOUND_FILE"/>
+        </asyncLogger>
+
+    </Loggers>
+
+</Configuration>
