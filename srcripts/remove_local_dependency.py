@@ -7,7 +7,7 @@ def findFile(path,version,keywords):
     for file_name in file_list:
          file_abs_path = os.path.join(path, file_name)
          if os.path.isdir(file_abs_path):
-            # print('dir:'+file_abs_path)
+            #print('dir:'+file_abs_path)
             findFile(file_abs_path,version,keywords)
          else:
             if file_name.endswith('-SNAPSHOT.jar'):
@@ -28,6 +28,7 @@ def removeFileByKeyword(path,file_name,keywords):
 
 def removeFile(path,file_name):
     file_abs_path = os.path.join(path, file_name)
+    print ('start ' + path + "\\")
     print ('file:'+file_abs_path)
     #os.remove(file_abs_path)
     pom_file=file_abs_path.replace(".jar",".pom")
@@ -39,10 +40,10 @@ def removeFile(path,file_name):
 def main():
     path1="C:\\repository\\com\\ericsson\\"
     # keyword='autotest'
-    version='21.7'
+    version='24.2'
     # version='all'
     # keywords=['token-validation']
-    keywords=['autotest']
+    keywords=['business']
     findFile(path1,version,keywords)
 
 if __name__ == "__main__":
