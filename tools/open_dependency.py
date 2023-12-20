@@ -1,10 +1,11 @@
+#!/usr/bin/env python
 import os
 import re
 
 File_PATH = 'C:/repository/com/ericsson/nsi/csf/iam/v2/iamv2-springboot-app/1.0-NSI-r21.8-SNAPSHOT'
 
 """ 
-python tools/open_dependency.py
+python tools/open_dependency.py --help
 """
 
 

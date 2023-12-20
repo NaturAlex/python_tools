@@ -1,12 +1,13 @@
+#! /usr/bin/env python
 import os
 import argparse
 '''
-python ./tools/clean_local_maven_repo.py --help
-python tools/clean_local_maven_repo.py --dependency Hero --version r21.8 --debug true
-python tools/clean_local_maven_repo.py --keyword Hero --keyword r21.8 --debug true
+python ./tools/delete_lib.py --help
+python tools/delete_lib.py --dependency Hero --version r21.8 --debug
+python tools/delete_lib.py --keyword Hero --keyword r21.8 --debug
+python tools/delete_lib.py --keyword Hero --keyword r23.7 --debug
 '''
-delete = False
-DEBUG = True
+DEBUG = False
 REPO_PATH = "C:\\repository\\com\\ericsson\\"
 # REPO_PATH = "C:\\repository\\com\\ericsson\\nsi\\iam\\v2\\Hero"
 wait_delete_file = set()
@@ -27,17 +28,17 @@ def findFile(path, keywords):
 def deletefiles(wait_delete_file_set):
     print("There are {} dir path ready to delete".format(len(wait_delete_file_set)))
     for filedir in wait_delete_file_set:
-        print("delete dir:"+filedir)
+        print("delete dir:" + filedir)
         wait_delete_files = os.listdir(filedir)
         for f in wait_delete_files:
             f = filedir+'/'+f
             print("ready to delete files: "+f)
-        if not DEBUG:
-            os.remove(f)
-            print("delete success: "+f)
+            if not DEBUG:
+                os.remove(f)
+                print("delete success: "+f)
 
 
-def main(depend, version, keyword_array):
+def main(depend, version,debug, keyword_array):
     # keyword='autotest'
     # version='all'
     # keywords=['token-validation']
@@ -47,18 +48,20 @@ def main(depend, version, keyword_array):
         keywords.append(version)
     else:
         keywords = keyword_array
-    DEBUG=debug
     findFile(REPO_PATH,keywords)
     deletefiles(wait_delete_file)
 
 
 parser = argparse.ArgumentParser(usage='''delete local repo dependencies
-    Eg: python tools/clean_local_maven_repo.py --dependency Hero --version r21.8 --debug true  
-        python tools/clean_local_maven_repo.py --keyword Hero --keyword r21.8 --debug true''',
+    Eg: python delete_lib.py --dependency Hero --version r21.8 --debug  
+        python delete_lib.py --dependency Hero --version r21.8
+        python delete_lib.py --keyword Hero --keyword r21.8 --debug
+        python delete_lib.py --keyword Hero --keyword r21.8''',
         description='''will loop repopath and find jar files by keywords or (dependency and version) e''')
 parser.add_argument('--dependency', dest='depend', metavar='ex: Hero', type=str, help='dependency name')
 parser.add_argument('--version', dest='version', metavar='ex: 21.4', type=str, help='dependency version')
-parser.add_argument('--debug', dest='debug', metavar='True', type=bool, help='if true, only print not delete files', required=True, default=False, choices=[True, False])
+# parser.add_argument('--debug', dest='debugStr', help='if true, only print not delete files')
+parser.add_argument('--debug', dest='debugStr', action='store_true', help='if true, only print not delete files')
 parser.add_argument('--keyword', dest='keywords', metavar='ex: --keyword hero --keyword 21.4', type=str, help='delete by keyword, higher priority than dependency', action='append')
 try:
     args = parser.parse_args()
@@ -67,9 +70,10 @@ except Exception as e:
 
 depend = args.depend
 version = args.version
-debug = args.debug
 keyword_array = args.keywords
+debug = args.debugStr
 DEBUG = debug
+print("DEBUG:" + str(DEBUG))
 if __name__ == "__main__":
     try:
         main(depend, version, debug, keyword_array)
